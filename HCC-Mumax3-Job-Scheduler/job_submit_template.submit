@@ -1,0 +1,11 @@
+#!/bin/sh
+#SBATCH --time=01:00:00
+#SBATCH --mem-per-cpu=256
+#SBATCH --job-name=cuda
+#SBATCH --partition=%(which_gpu)s
+#SBATCH --gres=gpu
+#SBATCH --error=/work/kovalev/rnepal2/job.%(J)s.err
+#SBATCH --output=/work/kovalev/rnepal2/job.%(J)s.out
+
+module load cuda/7.5
+/home/kovalev/rnepal2/mumax3 -o %(out_folder_path)s/ %(mumax_script_path)s

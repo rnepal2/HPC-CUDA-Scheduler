@@ -1,0 +1,59 @@
+EnableDemag = true   
+
+Nx:= 300
+Ny:= 72
+Nz:= 1
+
+cellsize := 1e-9
+
+xsize:= Nx*cellsize    
+ysize:= Ny*cellsize    
+zsize:= Nz*cellsize    
+
+// Sample Geometry
+
+SetPBC(0, 0, 0)
+SetGridSize(Nx, Ny, Nz)
+SetCellSize(cellsize,cellsize,0.5e-9)
+
+// Parameters
+
+Msat    = 10.6e5       
+Aex     = 20e-12
+alpha   = 0.03
+Dind = 2e-3
+
+//Ku1 = 1.3e6
+//anisU = vector(0, 0, 1)
+
+
+//Define grains with region number 0-255
+grainSize  := 5e-9  
+randomSeed := 1234567
+maxRegion  := 255
+ext_makegrains(grainSize, maxRegion, randomSeed)
+
+// set random Uniaxial Anisotropy per region
+for i:=0; i<maxRegion; i++{	
+	K := 1.2e6
+	Ku1.SetRegion(i, K + randNorm()*0.05*K)
+}
+anisU = vector(0,0,1)
+
+m = TwoDomain(0,0,1,  1,0,0,  0,0,-1)
+
+relax()
+
+ext_centerWall(2) 
+ext_dwspeed
+
+mag_field := %(field)s
+B_ext = vector(0, 0, mag_field*1e-3)
+
+//autosave(m, 5e-9)
+tableadd(ext_dwpos)
+tableadd(ext_dwspeed)
+tableadd(B_ext)
+tableautosave(1e-10)
+run(25e-9)
+
