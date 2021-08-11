@@ -1,7 +1,8 @@
 A job scheduler to submit GPU, mumax3, simulations of ferromagnetic spin systems into HPC. 
-This program creates a number of mumax3 script file and corresponding job submit files with different magnetic field within the range of fields given as inputs. The out put file 
-directories for different magnetic field in HPC working directory is also specified. Once all the the job_submit_script.py file is run it creates all such directories and submit 
-the created mumax3 script files through the job submit files.
+
+This program creates a number of mumax3 script file and corresponding job submit files with different magnetic field within the range of fields given as inputs. 
+The out put file directories for different magnetic field in HPC working directory is also specified. Once all the the job_submit_script.py file is run it creates 
+all such directories and submit the created mumax3 script files through the job submit files.
 
 The plot function collects the output of all the pre-specified output directories and collect the relevant data to 
 plot the average domain wall velocity vs magnetic field to see domain wall pinning-depinning transition.
